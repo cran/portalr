@@ -7,13 +7,17 @@
 Status](https://travis-ci.org/weecology/portalr.svg?branch=master)](https://travis-ci.org/weecology/portalr)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.1429290.svg)](https://doi.org/10.5281/zenodo.1429290)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/weecology/portalr/master/LICENSE)
+[![Coverage
+status](https://codecov.io/gh/weecology/portalr/branch/master/graph/badge.svg)](https://codecov.io/github/weecology/portalr?branch=master)
+[![CRAN
+downloads](https://cranlogs.r-pkg.org/badges/grand-total/portalr)](https://cran.rstudio.com/web/packages/portalr/index.html)
 
 <img src="man/figures/portalr.png" width="200px">
 
 ## Overview
 
 The **portalr** package provides collection of basic functions to
-summarize the Portal porject data on rodents, plants, ants, and weather
+summarize the Portal project data on rodents, plants, ants, and weather
 at our long-term field site in the Chihuahuan Desert. The data begin in
 1977 and are continuously updated today. There are functions to
 summarize rodent abundance, biomass, or energy and by site, plot, or
@@ -23,7 +27,13 @@ collected each summer and fall.
 
 ## Installation
 
-You can install portalr from github with:
+You can install portalr from CRAN with:
+
+``` r
+install.packages("portalr")
+```
+
+OR from github with:
 
 ``` r
 # install.packages("devtools")
@@ -38,7 +48,7 @@ devtools::install_github("weecology/portalr")
 <!-- end list -->
 
 ``` r
-data_tables <- load_data("repo")
+data_tables <- load_rodent_data("repo")
 ```
 
 2.  Download and generate summaries of rodent abundance and biomass:

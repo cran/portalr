@@ -1,6 +1,6 @@
 Package: portalr
 Title: Create Useful Summaries of the Portal Data
-Version: 0.1.4
+Version: 0.2.1
 Authors@R: c(person(c("Glenda", "M."), "Yenni", role = c("aut", "cre"), 
                     email = "glenda@weecology.org", 
                     comment = c(ORCID = "0000-0001-6969-1848")), 
@@ -16,26 +16,28 @@ Authors@R: c(person(c("Glenda", "M."), "Yenni", role = c("aut", "cre"),
                     comment = c(ORCID = "0000-0003-0803-4734")), 
              person(c("Shawn", "D."), "Taylor", role = c("aut"), 
                     comment = c(ORCID = "0000-0002-6178-6903")), 
-             person(c("Ethan", "P,"), "White", role = c("ctb"), 
+             person(c("Ethan", "P,"), "White", role = c("aut"), 
                     comment = c(ORCID = "0000-0001-6728-7745")), 
              person(c("S.K.", "Morgan"), "Ernest", role = c("aut"), 
                     comment = c(ORCID = "0000-0002-6026-8530")))
 Description: Download and generate summaries for the rodent, plant, ant, and 
     weather data from the Portal Project. Portal is a long-term (and ongoing) 
     experimental monitoring site in the Chihuahua desert. The raw data files 
-    can be found at <https://github.com/weecology/portalData>.
+    can be found at <https://github.com/weecology/portaldata>.
 License: MIT + file LICENSE
-URL: https://github.com/weecology/portalr
+URL: https://weecology.github.io/portalr/,
+        https://github.com/weecology/portalr
 BugReports: https://github.com/weecology/portalr/issues
 LazyData: true
 Depends: R (>= 3.2.3)
 Imports: dplyr, ggplot2, tidyr, zoo, lubridate, magrittr, httr, rlang,
-        forecast, lunar, jsonlite
-Suggests: httptest, digest, tidyverse, cowplot, knitr, rmarkdown
-RoxygenNote: 6.1.0
+        forecast, lunar, jsonlite, tibble
+Suggests: httptest, digest, tidyverse, cowplot, knitr, rmarkdown,
+        pkgdown, covr
+RoxygenNote: 6.1.1
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2018-11-02 23:31:12 UTC; GlendaYenni
+Packaged: 2019-01-23 19:54:53 UTC; GlendaYenni
 Author: Glenda M. Yenni [aut, cre] (<https://orcid.org/0000-0001-6969-1848>),
   Hao Ye [aut] (<https://orcid.org/0000-0002-8630-1458>),
   Erica M. Christensen [aut] (<https://orcid.org/0000-0002-5635-2502>),
@@ -43,8 +45,8 @@ Author: Glenda M. Yenni [aut, cre] (<https://orcid.org/0000-0001-6969-1848>),
   Ellen K. Bledsoe [aut] (<https://orcid.org/0000-0002-3629-7235>),
   Renata M. Diaz [aut] (<https://orcid.org/0000-0003-0803-4734>),
   Shawn D. Taylor [aut] (<https://orcid.org/0000-0002-6178-6903>),
-  Ethan P, White [ctb] (<https://orcid.org/0000-0001-6728-7745>),
+  Ethan P, White [aut] (<https://orcid.org/0000-0001-6728-7745>),
   S.K. Morgan Ernest [aut] (<https://orcid.org/0000-0002-6026-8530>)
 Maintainer: Glenda M. Yenni <glenda@weecology.org>
 Repository: CRAN
-Date/Publication: 2018-11-14 11:00:07 UTC
+Date/Publication: 2019-01-23 22:50:35 UTC
