@@ -1,4 +1,4 @@
-1771c6b2b8654fc5f498a9e78b736d53 *DESCRIPTION
+46f1f20493b045de761f077a6ea7acbf *DESCRIPTION
 7dd229ce7fa36a658f4d881bd706411b *LICENSE
 f5ff41372f3be18cc5c2381c1e4feec2 *NAMESPACE
 3f5949be63afd93d9fd845e5c69b95bb *R/NDVI.R
@@ -16,14 +16,14 @@ dbe2ff1c0175dc995a0f111666c38f36 *R/summarize_individual_rodents.R
 3a736e0eebed4abc97fb501ff2e018a8 *R/summarize_plants.R
 9429dacff64ca5ed8104381c2a635098 *R/summarize_rodents.R
 c520d711f928f53125df2f5b542dbff0 *R/zzz.R
-2fc4194f00fd281ef9d8717d4f9a9b16 *README.md
+ea7dfc9bed3306cdd473d5fa846ea9af *README.md
 97610f9496eea0fbf6b1d6b9b6f0a7c7 *build/vignette.rds
-cab03c612d8872bf440083df093fd98c *inst/doc/portal_researcher_examples.R
+5d3de267bcd1952559bbc7290cb4cce8 *inst/doc/portal_researcher_examples.R
 886bcd386c37f3114939b03b88f42afe *inst/doc/portal_researcher_examples.Rmd
-37d8990acfaf26c2b2cd9ecf940badc5 *inst/doc/portal_researcher_examples.html
-fc26908eee3e267db34583437e71d222 *inst/doc/rodent-abundance-demo.R
+f1a6c6470befe8379767a01a56091d52 *inst/doc/portal_researcher_examples.html
+c914ca7d40b4abdfdbd20630f7b1bda9 *inst/doc/rodent-abundance-demo.R
 b8baabbcd8ac27c94a850ae6e1ca3bed *inst/doc/rodent-abundance-demo.Rmd
-e38e7ae21cc2390c5149b72c01271d05 *inst/doc/rodent-abundance-demo.html
+887ef599a8327615ddacfef3effacfc9 *inst/doc/rodent-abundance-demo.html
 cb095ae90c3bd82bd76c6071feed60a1 *man/add_seasons.Rd
 0e8202afe35019d7833470260bfee556 *man/bait_presence_absence.Rd
 20b88f3ae4edef38a7fa26d4b339dc85 *man/check_for_newer_data.Rd
@@ -58,6 +58,6 @@ ac9efab781919b0b157e0b9559c517e0 *tests/testthat/test-03-summarize-rodents.R
 28142f20d57830a3824490a148509d23 *tests/testthat/test-08-NDVI.R
 fa2e25e6e7ac34969feff3561c18c3f8 *tests/testthat/test-09-get-future-moons.R
 44db0fec753a315e52f9f7f2210155b3 *tests/testthat/test-10-summarize_ants.R
-c2d5242554d7c0d5c3a09ee910f7e4c5 *tests/testthat/test-99-regression.R
+9da5fe05f147bb6aca5a5158b6e664ba *tests/testthat/test-99-regression.R
 886bcd386c37f3114939b03b88f42afe *vignettes/portal_researcher_examples.Rmd
 b8baabbcd8ac27c94a850ae6e1ca3bed *vignettes/rodent-abundance-demo.Rmd
