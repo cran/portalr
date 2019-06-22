@@ -1,7 +1,3 @@
-#' @importFrom magrittr "%>%"
-#' @importFrom lubridate "%m+%"
-
-
 #' @title NDVI by calendar month or lunar month
 #'
 #' @description Summarize NDVI data to monthly or lunar monthly level
@@ -9,16 +5,19 @@
 #' @param level specify "monthly" or "newmoon"
 #' @param fill specify if missing data should be filled, passed to
 #'   \code{fill_missing_ndvi}
-#' @param path specify where to locate Portal data
+#' @inheritParams load_datafile
 #'
 #' @export
 #'
-ndvi <- function(level = "monthly", fill = FALSE, path = '~') {
-  NDVI <- read.csv(full_path('PortalData/NDVI/monthly_NDVI.csv', path),
-                   na.strings = c(""), stringsAsFactors = FALSE)
-  moon_dates <- read.csv(full_path('PortalData/Rodents/moon_dates.csv', path),
-                         na.strings = c(""), stringsAsFactors = FALSE)
-
+ndvi <- function(level = "monthly", fill = FALSE,
+                 path = get_default_data_path(), download_if_missing = TRUE)
+{
+  NDVI <- load_datafile(file.path("NDVI", "monthly_NDVI.csv"),
+                        na.strings = "", path = path,
+                        download_if_missing = download_if_missing)
+  moon_dates <-  load_datafile(file.path("Rodents", "moon_dates.csv"),
+                               na.strings = "", path = path,
+                               download_if_missing = download_if_missing)
   if (!all(c("year", "month") %in% names(NDVI))) {
     NDVI$month <- lubridate::month(paste0(NDVI$date, "-01"))
     NDVI$year <- lubridate::year(paste0(NDVI$date, "-01"))
@@ -37,9 +36,9 @@ ndvi <- function(level = "monthly", fill = FALSE, path = '~') {
       dplyr::ungroup() %>%
       dplyr::select(ndvi, date)
     if (fill == TRUE) {
-       curr_yearmonth <- format(Sys.Date(), "%Y-%m")
-       last_time <- as.Date(paste(curr_yearmonth, "-01", sep = ""))
-       NDVI <- fill_missing_ndvi(NDVI, "monthly", last_time)
+      curr_yearmonth <- format(Sys.Date(), "%Y-%m")
+      last_time <- as.Date(paste(curr_yearmonth, "-01", sep = ""))
+      NDVI <- fill_missing_ndvi(NDVI, "monthly", last_time)
     }
   } else if (level == "newmoon") {
     nm_number <- moon_dates$newmoonnumber[-1]
@@ -62,10 +61,10 @@ ndvi <- function(level = "monthly", fill = FALSE, path = '~') {
       dplyr::arrange(newmoonnumber)
 
     if (fill == TRUE) {
-       today <- Sys.Date()
-       prev_time <- moon_dates$newmoonnumber[moon_dates$newmoondate < today]
-       last_time <- tail(prev_time, 1)
-       NDVI <- fill_missing_ndvi(NDVI, "newmoon", last_time, moon_dates)
+      today <- Sys.Date()
+      prev_time <- moon_dates$newmoonnumber[moon_dates$newmoondate < today]
+      last_time <- tail(prev_time, 1)
+      NDVI <- fill_missing_ndvi(NDVI, "newmoon", last_time, moon_dates)
     }
   }
 
