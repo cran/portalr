@@ -52,7 +52,7 @@ load_rodent_data <- function(path = get_default_data_path(),
   # reformat species columns
   if (!"species" %in% names(species_table))
   {
-    species_table <- dplyr::rename(species_table, species = speciescode)
+    species_table <- dplyr::rename(species_table, species = .data$speciescode)
   }
 
   # convert rodent tags to characters if not already
@@ -67,7 +67,7 @@ load_rodent_data <- function(path = get_default_data_path(),
                                  by = "period")
     plots_table <- clean_data(plots_table, trapping_table,
                               by = c("year", "month", "plot"))
-    trapping_table <- dplyr::filter(trapping_table, qcflag == 1)
+    trapping_table <- dplyr::filter(trapping_table, .data$qcflag == 1)
   }
 
   return(mget(c("rodent_data", "species_table", "trapping_table",
@@ -116,12 +116,7 @@ load_plant_data <- function(path = get_default_data_path(),
                                     na.strings = "", path, download_if_missing)
 
   # reformat species columns
-  if (!"sp" %in% names(species_table))
-  {
-    species_table <- dplyr::rename(species_table,
-                                   sp = species,
-                                   species = speciescode)
-  }
+  species_table <- reformat_species_table(species_table)
 
   return(mget(c("quadrat_data", "species_table", "census_table",
                 "date_table", "plots_table",
@@ -160,16 +155,10 @@ load_ant_data <- function(path = get_default_data_path(),
                                na.strings = "NA", path, download_if_missing)
 
   # reformat species columns
-  if (!"sp" %in% names(species_table))
-  {
-    species_table <- dplyr::rename(species_table,
-                                   sp = species,
-                                   species = speciescode)
-  }
+  species_table <- reformat_species_table(species_table)
 
   return(mget(c("bait_data", "colony_data",
                 "species_table", "plots_table")))
-
 }
 
 #' @rdname load_rodent_data
@@ -265,4 +254,17 @@ load_datafile <- function(datafile, na.strings = "", path = get_default_data_pat
 
   ## read in the data table and return
   read.csv(datafile, na.strings = na.strings, stringsAsFactors = FALSE)
+}
+
+
+#' @noRd
+reformat_species_table <- function(species_table)
+{
+  if (!"sp" %in% names(species_table))
+  {
+    species_table <- dplyr::rename(species_table,
+                                   sp = .data$species,
+                                   species = .data$speciescode)
+  }
+  return(species_table)
 }

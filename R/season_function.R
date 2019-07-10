@@ -13,8 +13,8 @@
 #'                          fall = Sep-Nov
 #' @param date_column either "date" (must be in format "y-m-d"), "period", "newmoonnumber",
 #'                    or "yearmon" (data must contain "year" and "month")
-#' @param summarize A function or list of functions specified by their name (e.g. "mean").
-#'                  Default is NA (returned with seasons added but not summarized).
+#' @param summary_funs A function or list of functions specified by their name (e.g. "mean").
+#'                     Default is NA (returned with seasons added but not summarized).
 #' @inheritParams summarize_rodent_data
 #'
 #' @return a data.frame with additional "season" and "year" column, and other columns summarized as specified
@@ -23,19 +23,18 @@
 #' @export
 #'
 add_seasons <- function(data, level = "site", season_level = 2,
-                        date_column = "yearmon", summarize = NA,
+                        date_column = "yearmon", summary_funs = NA,
                         path = get_default_data_path(),
                         download_if_missing = TRUE, clean = TRUE)
 {
 
   date_column <- tolower(date_column)
-  summarize <- tolower(summarize)
-  if (!is.na(summarize)) {sumfun <- get(summarize)}
+  if (!is.na(summary_funs)) {sumfun <- get(summary_funs)}
   grouping <- switch(level,
-                     "plot" = rlang::quos(year, season, treatment, plot),
-                     "treatment" = rlang::quos(year, season, treatment),
-                     rlang::quos(year, season))
-  if("species" %in% colnames(data)) {grouping <- c(grouping, rlang::quos(species))}
+                     "plot" = c("year", "season", "treatment", "plot"),
+                     "treatment" = c("year", "season", "treatment"),
+                     "site" = c("year", "season"))
+  if("species" %in% colnames(data)) {grouping <- c(grouping, "species")}
 
   newmoons_table <- load_datafile(file.path("Rodents", "moon_dates.csv"),
                                   na.strings = "NA", path, download_if_missing)
@@ -46,19 +45,20 @@ add_seasons <- function(data, level = "site", season_level = 2,
                          date_column)
     full_data <- data %>%
       dplyr::left_join(newmoons_table, by = date_column)  %>%
-      dplyr::mutate(year = lubridate::year(censusdate),
-                    month = lubridate::month(censusdate)) %>%
+      dplyr::mutate(year = lubridate::year(.data$censusdate),
+                    month = lubridate::month(.data$censusdate)) %>%
       dplyr::select(-dplyr::one_of(date_vars)) %>%
-      dplyr::group_by(year, month)
+      dplyr::group_by(.data$year, .data$month)
 
   } else if (date_column == "date") {
     full_data <- data %>%
-      dplyr::mutate(year = lubridate::year(date), month = lubridate::month(date)) %>%
-      dplyr::group_by(year, month)
+      dplyr::mutate(year = lubridate::year(.data$date),
+                    month = lubridate::month(.data$date)) %>%
+      dplyr::group_by(.data$year, .data$month)
 
     } else if (date_column == "yearmon") {
     full_data <- data %>%
-      dplyr::group_by(year, month)
+      dplyr::group_by(.data$year, .data$month)
 
     } else {
     print("date_column must equal period, newmoonnumber, date, or yearmon")
@@ -78,17 +78,19 @@ add_seasons <- function(data, level = "site", season_level = 2,
 
     full_data$season <- seasons[match(unlist(full_data$month), names(seasons))]
 
-  } else if (season_level == "year" && !(is.na(summarize))) {
+  } else if (season_level == "year" && !(is.na(summary_funs))) {
     grouping <- grouping[-2]
   } else {
     stop("`season_level` must equal 2, 4, or year")
   }
 
-  if (!is.na(summarize))
+  if (!is.na(summary_funs))
   {
-    full_data <- full_data %>% dplyr::group_by(!!!grouping) %>%
-      dplyr::summarize_all(dplyr::funs(sumfun), na.rm = TRUE) %>%
-      dplyr::select(-month, -dplyr::contains("day"), -dplyr::contains("newmoonnumber"),
+    date_vars <- c("month", "day", "date", "newmoonnumber", "period")
+    full_data <- full_data %>% dplyr::group_by_at(grouping) %>%
+      dplyr::summarize_all(list(summary_funs), na.rm = TRUE) %>%
+      dplyr::select(-.data$month, -dplyr::contains("day"),
+                    -dplyr::contains("newmoonnumber"),
                     -dplyr::contains("date"), -dplyr::contains("period"))
   }
 
@@ -109,5 +111,5 @@ add_seasons <- function(data, level = "site", season_level = 2,
 #' @export
 #'
 yearly <- function(...) {
-  add_seasons(..., season_level = "year", summarize = "mean")
+  add_seasons(..., season_level = "year", summary_funs = "mean")
 }

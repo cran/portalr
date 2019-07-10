@@ -20,12 +20,20 @@ weather <- function(level = "daily", fill = FALSE, path = get_default_data_path(
 
   ###########Summarise by Day ----------------------
   days <- weather_new %>%
-    dplyr::group_by(year, month, day) %>%
-    dplyr::summarize(mintemp = min(airtemp), maxtemp = max(airtemp), meantemp = mean(airtemp), precipitation = sum(precipitation), battv = min(battv, na.rm = TRUE))
+    dplyr::group_by(.data$year, .data$month, .data$day) %>%
+    dplyr::summarize(mintemp = min(.data$airtemp),
+                     maxtemp = max(.data$airtemp),
+                     meantemp = mean(.data$airtemp),
+                     precipitation = sum(.data$precipitation),
+                     battv = min(.data$battv, na.rm = TRUE)) %>%
+    dplyr::ungroup()
 
   weather <- dplyr::bind_rows(weather_old[1:3442, ], days)  %>%
-    dplyr::mutate(locally_measured = TRUE, battv = ifelse(is.infinite(battv), NA, battv), battery_low = ifelse(battv<11, TRUE, FALSE)) %>%
-    dplyr::select(year, month, day, mintemp, maxtemp, meantemp, precipitation, locally_measured, battery_low)
+    dplyr::mutate(locally_measured = TRUE,
+                  battv = ifelse(is.infinite(.data$battv), NA, .data$battv),
+                  battery_low = ifelse(.data$battv < 11, TRUE, FALSE)) %>%
+    dplyr::select(c("year", "month", "day", "mintemp", "maxtemp", "meantemp",
+                    "precipitation", "locally_measured", "battery_low"))
 
   if (fill)
   {
@@ -37,15 +45,19 @@ weather <- function(level = "daily", fill = FALSE, path = get_default_data_path(
     ##########Summarise by Month -----------------
 
     weather = weather %>%
-      dplyr::group_by(year, month) %>%
-      dplyr::summarize(mintemp = min(mintemp, na.rm = TRUE), maxtemp = max(maxtemp, na.rm = TRUE), meantemp = mean(meantemp, na.rm = TRUE),
-                       precipitation = sum(precipitation, na.rm = TRUE), locally_measured = all(locally_measured),
-                       battery_low = all(battery_low, na.rm = TRUE)) %>%
-      dplyr::arrange(year, month) %>%
-      dplyr::select(year, month, mintemp, maxtemp, meantemp, precipitation, locally_measured, battery_low) %>%
-      dplyr::mutate(battery_low = ifelse(year < 2003, NA, battery_low))
+      dplyr::group_by(.data$year, .data$month) %>%
+      dplyr::summarize(mintemp = min(.data$mintemp, na.rm = TRUE),
+                       maxtemp = max(.data$maxtemp, na.rm = TRUE),
+                       meantemp = mean(.data$meantemp, na.rm = TRUE),
+                       precipitation = sum(.data$precipitation, na.rm = TRUE),
+                       locally_measured = all(.data$locally_measured),
+                       battery_low = all(.data$battery_low, na.rm = TRUE)) %>%
+      dplyr::ungroup() %>%
+      dplyr::arrange(.data$year, .data$month) %>%
+      dplyr::select(c("year", "month", "mintemp", "maxtemp", "meantemp",
+                      "precipitation", "locally_measured", "battery_low")) %>%
+      dplyr::mutate(battery_low = ifelse(.data$year < 2003, NA, .data$battery_low))
   } else if (level == "newmoon") {
-
     ##########Summarise by lunar month -----------------
 
     weather$date <- as.Date(paste(weather$year, weather$month, weather$day, sep = "-"))
@@ -64,16 +76,18 @@ weather <- function(level = "daily", fill = FALSE, path = get_default_data_path(
     weather$newmoonnumber <- newmoon_match_number[match(weather$date, newmoon_match_date)]
 
     weather <- weather %>%
-      dplyr::group_by(newmoonnumber) %>%
-      dplyr::summarize(date = max(date, na.rm = TRUE), mintemp = min(mintemp, na.rm = TRUE),
-                       maxtemp = max(maxtemp, na.rm = TRUE), meantemp = mean(meantemp, na.rm = TRUE),
-                       precipitation = sum(precipitation,  na.rm = TRUE),
-                       locally_measured = all(locally_measured),
-                       battery_low = all(battery_low, na.rm = TRUE)) %>%
-      dplyr::arrange(newmoonnumber) %>%
-      dplyr::select(newmoonnumber, date, mintemp, maxtemp, meantemp, precipitation,
-                    locally_measured, battery_low) %>%
-      dplyr::mutate(battery_low = ifelse(date < "2003-01-01", NA, battery_low))
+      dplyr::group_by(.data$newmoonnumber) %>%
+      dplyr::summarize(date = max(.data$date, na.rm = TRUE),
+                       mintemp = min(.data$mintemp, na.rm = TRUE),
+                       maxtemp = max(.data$maxtemp, na.rm = TRUE),
+                       meantemp = mean(.data$meantemp, na.rm = TRUE),
+                       precipitation = sum(.data$precipitation,  na.rm = TRUE),
+                       locally_measured = all(.data$locally_measured),
+                       battery_low = all(.data$battery_low, na.rm = TRUE)) %>%
+      dplyr::arrange(.data$newmoonnumber) %>%
+      dplyr::select(c("newmoonnumber", "date", "mintemp", "maxtemp", "meantemp",
+                      "precipitation", "locally_measured", "battery_low")) %>%
+      dplyr::mutate(battery_low = ifelse(.data$date < "2003-01-01", NA, .data$battery_low))
   }
 
   return(weather)
@@ -104,28 +118,32 @@ fill_missing_weather <- function(weather, path = get_default_data_path())
     dplyr::filter(date >= "1980-01-01")
 
   regionmeans <- region %>%
-    dplyr::group_by(date, element) %>%
-    dplyr::summarize(value = mean(c(value.x, value.y), na.rm = TRUE) / 10) %>%
+    tidyr::gather(key = "source", value = "value", .data$value.x, .data$value.y) %>%
+    dplyr::group_by(.data$date, .data$element) %>%
+    dplyr::summarize(value = mean(.data$value, na.rm = TRUE)) %>%
     dplyr::ungroup() %>%
-    tidyr::spread(element, value) %>%
-    dplyr::mutate(tmin = TMIN,
-                  tmax = TMAX,
-                  tobs = TOBS,
-                  precip = PRCP,
-                  year = as.integer(lubridate::year(date)),
-                  month = as.integer(lubridate::month(date)),
-                  day = lubridate::day(date)) %>%
-    dplyr::filter(!(is.na(tmin) & is.na(tmax) & is.na(tobs) & is.na(precip))) %>%
-    dplyr::select(year, month, day, precip, tmin, tmax, tobs)
+    dplyr::mutate(value = .data$value / 10) %>%
+    tidyr::spread(.data$element, .data$value) %>%
+    dplyr::mutate(tmin = .data$TMIN,
+                  tmax = .data$TMAX,
+                  tobs = .data$TOBS,
+                  precip = .data$PRCP,
+                  year = as.integer(lubridate::year(.data$date)),
+                  month = as.integer(lubridate::month(.data$date)),
+                  day = lubridate::day(.data$date)) %>%
+    dplyr::filter(!(is.na(.data$tmin) & is.na(.data$tmax) &
+                      is.na(.data$tobs) & is.na(.data$precip))) %>%
+    dplyr::select(c("year", "month", "day", "precip", "tmin", "tmax", "tobs"))
 
   filled_data <- dplyr::full_join(regionmeans, weather, by = c("year", "month", "day")) %>%
-    dplyr::arrange(year, month, day) %>%
-    dplyr::mutate(locally_measured = ifelse(any(is.na(c(mintemp, maxtemp, meantemp, precipitation))), FALSE, TRUE),
-                  mintemp = ifelse(is.na(mintemp), tmin, mintemp),
-                  maxtemp = ifelse(is.na(maxtemp), tmax, maxtemp),
-                  meantemp = ifelse(is.na(meantemp), tobs, meantemp),
-                  precipitation = ifelse(is.na(precipitation), precip, precipitation)) %>%
-    dplyr::select(year, month, day, mintemp, maxtemp, meantemp, precipitation, locally_measured, battery_low)
+    dplyr::arrange(.data$year, .data$month, .data$day) %>%
+    dplyr::mutate(locally_measured = !(is.na(.data$mintemp) | is.na(.data$maxtemp) |
+                                       is.na(.data$meantemp) | is.na(.data$precipitation)),
+                  mintemp = ifelse(is.na(.data$mintemp), .data$tmin, .data$mintemp),
+                  maxtemp = ifelse(is.na(.data$maxtemp), .data$tmax, .data$maxtemp),
+                  meantemp = ifelse(is.na(.data$meantemp), .data$tobs, .data$meantemp),
+                  precipitation = ifelse(is.na(.data$precipitation), .data$precip, .data$precipitation)) %>%
+    dplyr::select(c("year", "month", "day", "mintemp", "maxtemp", "meantemp", "precipitation", "locally_measured", "battery_low"))
 
   return(as.data.frame(filled_data))
 }

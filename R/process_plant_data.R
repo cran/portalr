@@ -12,26 +12,29 @@
 #'
 #' @noRd
 #'
-make_plant_plot_data <- function(plant_data, census_info_table, output, min_quads = 1) {
+make_plant_plot_data <- function(plant_data, census_info_table,
+                                 output, min_quads = 1)
+{
 
-  grouping <- rlang::quos(year, season, plot, species)
+  grouping <- rlang::quos(.data$year, .data$season, .data$plot, .data$species)
   wt <- switch(output,
-               "abundance" = rlang::quo(abundance),
-               "cover" = rlang::quo(cover))
+               "abundance" = rlang::quo(.data$abundance),
+               "cover" = rlang::quo(.data$cover))
   filler <- list(n = as.integer(0))
 
   plant_data %>%
     dplyr::group_by(!!!grouping) %>%
-    dplyr::summarise(n = sum(!!wt, na.rm = TRUE))  %>%
+    dplyr::summarize(n = sum(!!wt, na.rm = TRUE))  %>%
     dplyr::ungroup() %>%
-    dplyr::right_join(census_info_table[,c("year","season","plot")], by = c("year", "season", "plot")) %>%
+    dplyr::right_join(census_info_table[, c("year","season","plot")],
+                      by = c("year", "season", "plot")) %>%
     tidyr::complete(!!!grouping, fill = filler) %>%
     dplyr::full_join(census_info_table, by = c("year", "season", "plot")) %>%
-    dplyr::select(year, season, plot, species, n, nquads, treatment) %>%
-    dplyr::filter(!is.na(species)) %>%
-    dplyr::mutate(n = replace(n, nquads < min_quads, NA),
-                  nquads = replace(nquads, nquads < min_quads, NA)) %>%
-    dplyr::rename(!!output := n)
+    dplyr::select(c("year", "season", "plot", "species", "n", "nquads", "treatment")) %>%
+    dplyr::filter(!is.na(.data$species)) %>%
+    dplyr::mutate(n = replace(.data$n, .data$nquads < min_quads, NA),
+                  nquads = replace(.data$nquads, .data$nquads < min_quads, NA)) %>%
+    dplyr::rename(!!output := .data$n)
 }
 
 #' Plant data summarized at the relevant level (plot, treatment, site)
@@ -54,24 +57,24 @@ make_plant_level_data <- function(plot_data, level, output,
 
   plot_data <- dplyr::rename(plot_data, n := !!output)
   grouping <- switch(level,
-                     "plot" = rlang::quos(year, season, plot, species),
-                     "treatment" = rlang::quos(year, season, treatment, species),
-                     "site" = rlang::quos(year, season, species))
+                     "plot" = c("year", "season", "plot", "species"),
+                     "treatment" = c("year", "season", "treatment", "species"),
+                     "site" = c("year", "season", "species"))
 
-  level_data <- dplyr::group_by(plot_data, !!!grouping) %>%
-    dplyr::summarise(n = sum(n, na.rm = TRUE),
-                     quads = sum(nquads, na.rm = TRUE),
-                     nplots = dplyr::n_distinct(plot)) %>%
+  level_data <- dplyr::group_by_at(plot_data, grouping) %>%
+    dplyr::summarize(n = sum(.data$n, na.rm = TRUE),
+                     quads = sum(.data$nquads, na.rm = TRUE),
+                     nplots = dplyr::n_distinct(.data$plot)) %>%
     dplyr::ungroup()
 
   if (level == "plot")
   {
     level_data <- level_data %>%
-      dplyr::mutate(n = replace(n, quads < min_quads, NA))
+      dplyr::mutate(n = replace(.data$n, .data$quads < min_quads, NA))
   }
 
   level_data %>%
-    dplyr::rename(!!output := n) %>%
+    dplyr::rename(!!output := .data$n) %>%
     tibble::as_tibble()
 }
 
@@ -103,9 +106,9 @@ prep_plant_output <- function(level_data, effort, na_drop,
   out_data <- level_data
 
   if (effort == FALSE) {
-    out_data <- dplyr::select(out_data, -nplots, -quads)
+    out_data <- dplyr::select(out_data, -.data$nplots, -.data$quads)
   } else if (level %in% c("plot", "site")) {
-    out_data <- dplyr::select(out_data, -nplots)
+    out_data <- dplyr::select(out_data, -.data$nplots)
   }
 
   if (na_drop) {
@@ -118,9 +121,9 @@ prep_plant_output <- function(level_data, effort, na_drop,
 
   if (zero_drop) {
     if (shape == "crosstab") {
-      species <- as.character(unique(level_data$species))
+      species_names <- as.character(unique(level_data$species))
       out_data <- out_data %>%
-        dplyr::filter(rowSums(dplyr::select(., species)) != 0)
+        dplyr::filter(rowSums(dplyr::select(., species_names)) != 0)
     } else { # shape == "flat"
       out_data <- out_data %>%
         dplyr::filter(output != 0)
@@ -175,10 +178,10 @@ process_unknownsp_plants <- function(quadrat_data, unknowns) {
   {
     #Rename all unknowns to "other"
     quadrat_species_merge <- quadrat_data %>%
-      dplyr::mutate(species = replace(species, commonname == "Unknown", "other"))
+      dplyr::mutate(species = replace(.data$species, .data$commonname == "Unknown", "other"))
   } else {
     quadrat_species_merge <- quadrat_data %>%
-      dplyr::filter(commonname != "Unknown")
+      dplyr::filter(.data$commonname != "Unknown")
   }
   return(quadrat_species_merge)
 }
@@ -200,19 +203,17 @@ process_unknownsp_plants <- function(quadrat_data, unknowns) {
 #' @noRd
 process_annuals <- function(quadrat_sp_data, type) {
   if (type %in% c("annuals", "annual")) {
-    return(dplyr::filter(quadrat_sp_data, duration == "Annual"))
+    return(dplyr::filter(quadrat_sp_data, .data$duration == "Annual"))
   } else if (type %in% c("non-woody", "nonwoody")) {
-    return(dplyr::filter(quadrat_sp_data, !community %in% c("Shrub", "Subshrub")))
+    return(dplyr::filter(quadrat_sp_data, !.data$community %in% c("Shrub", "Subshrub")))
   } else if (type %in% c("perennials", "perennial")) {
-    return(dplyr::filter(quadrat_sp_data, duration == "Perennial"))
+    return(dplyr::filter(quadrat_sp_data, .data$duration == "Perennial"))
   } else if (type %in% c("shrubs", "shrub")) {
-    return(dplyr::filter(quadrat_sp_data, community %in% c("Shrub", "Subshrub")))
+    return(dplyr::filter(quadrat_sp_data, .data$community %in% c("Shrub", "Subshrub")))
   } else if (type %in% c("summer annual", "summer annuals", "summer-annual", "summer-annuals")) {
-    return(dplyr::filter(quadrat_sp_data, community %in% c("Summer Annual",
-                                                           "Summer and Winter Annual")))
+    return(dplyr::filter(quadrat_sp_data, .data$community %in% c("Summer Annual", "Summer and Winter Annual")))
   } else if (type %in% c("winter annual", "winter annuals", "winter-annual", "winter-annuals")) {
-    return(dplyr::filter(quadrat_sp_data, community %in% c("Winter Annual",
-                                                           "Summer and Winter Annual")))
+    return(dplyr::filter(quadrat_sp_data, .data$community %in% c("Winter Annual", "Summer and Winter Annual")))
   } else {
     return(quadrat_sp_data)
   }
@@ -244,8 +245,8 @@ join_census_to_dates <- function(census_table, date_table, plots_table) {
   # add column for number of quadrats censused per plot per census
   #   and join date and plot info
   census_table %>%
-    dplyr::group_by(year, season, plot) %>%
-    dplyr::summarize(nquads = sum(censused)) %>%
+    dplyr::group_by(.data$year, .data$season, .data$plot) %>%
+    dplyr::summarize(nquads = sum(.data$censused)) %>%
     dplyr::left_join(date_table, by = c(year = "year", season = "season")) %>%
     dplyr::left_join(plots_table, by = c(year = "year", treat_month = "month", plot = "plot"))
 }
@@ -299,10 +300,10 @@ clean_plant_data <- function(data_tables, type = "All", unknowns = FALSE,
                              correct_sp = TRUE)
 {
   data_tables$quadrat_data %>%
-    dplyr::filter(!grepl(3,notes)) %>%
+    dplyr::filter(!grepl(3, .data$notes)) %>%
     dplyr::left_join(data_tables$species_table, by = "species") %>%
     rename_species_plants(correct_sp) %>%
     process_annuals(type) %>%
     process_unknownsp_plants(unknowns) %>%
-    dplyr::mutate(species = as.factor(species))
+    dplyr::mutate(species = as.factor(.data$species))
 }
