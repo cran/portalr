@@ -1,4 +1,4 @@
-68f7d89902b38e379d6440c30e750a92 *DESCRIPTION
+8cb098fba5c364b366c4363eea612a1a *DESCRIPTION
 7dd229ce7fa36a658f4d881bd706411b *LICENSE
 e9a342fba56291289c8065fe6f6bc148 *NAMESPACE
 a54f563fb3d4536f4cfc7b6146484540 *R/NDVI.R
@@ -10,7 +10,7 @@ b31bfd8c919e38bd0e06d48ddac84199 *R/get_future_moons.R
 ff786b33353ea7e690db01a19d52acf4 *R/portalr-package.R
 50c4688d259434d04afa4e82fc2a4827 *R/process_data_utils.R
 6a922a3dae697ee4e496501d00310a87 *R/process_plant_data.R
-365fea412744331c12de961fc2a80e89 *R/process_rodent_data.R
+7e9b16e77131f3226231744a3243008b *R/process_rodent_data.R
 d59dada77ec7cb428cb66eb156ceedba *R/raster_plot_species_by_stake.R
 061d886aa7ebcd226035489816b9be6e *R/season_function.R
 59e4073560a3ac6bc3c548915f06f725 *R/summarize_ants.R
@@ -23,10 +23,10 @@ a4736f74416653d73950d9c81570f36f *R/zzz.R
 97610f9496eea0fbf6b1d6b9b6f0a7c7 *build/vignette.rds
 69b3c98de3eb836d9464258cfa9ef7f9 *inst/doc/portal_researcher_examples.R
 903c16417bc0e580500aaccd6e0e756a *inst/doc/portal_researcher_examples.Rmd
-e6ccfa5561d9da1e6ee9598c8b994841 *inst/doc/portal_researcher_examples.html
-4eaf5601e692baf51b739fa3298a9aa6 *inst/doc/rodent-abundance-demo.R
-ab531f28ced3040d8dae7e829f6c2d63 *inst/doc/rodent-abundance-demo.Rmd
-36b9b0543fc10868b4f0ac2e61f3ea2d *inst/doc/rodent-abundance-demo.html
+9328c19eb7834b4e739b5125afcd3293 *inst/doc/portal_researcher_examples.html
+76a0231708f20b561df147df022a7ba8 *inst/doc/rodent-abundance-demo.R
+1b44d3c691ae5dadbc24b4a8d3f48887 *inst/doc/rodent-abundance-demo.Rmd
+579be8175c9beb42adcf506bdc46c9e9 *inst/doc/rodent-abundance-demo.html
 516485b72919584f8e89aaf507f98744 *man/add_seasons.Rd
 27e5404aa67f7a633aa42129f3591220 *man/bait_presence_absence.Rd
 02686a41e5f62840b765cd03351261f9 *man/check_for_newer_data.Rd
@@ -54,7 +54,7 @@ ddcd0bf549b4e39af3a88963b854950b *man/summarize_plant_data.Rd
 70046971a3a69b6b4eef29ceda2850d6 *tests/testthat.R
 49bb0a7e6eb7ead0ff9bc633ed194b5e *tests/testthat/test-01-data-retrieval.R
 58fb54b7a6691fa135f2743cc9903c8d *tests/testthat/test-02-data-processing.R
-0a4c43be448aa2cf221bfe309211f645 *tests/testthat/test-03-summarize-rodents.R
+283bff2f334f2a26147bebbd4af8e556 *tests/testthat/test-03-summarize-rodents.R
 3bf03bdf5d6456e749c34027db157303 *tests/testthat/test-04-weather.R
 9a94575fa8f1ecb0f29adb709c63aba6 *tests/testthat/test-05-individual-stake-data.R
 ad04a7f95546db150ffdde975f20bdbb *tests/testthat/test-06-summarize-plants.R
@@ -62,6 +62,6 @@ ad04a7f95546db150ffdde975f20bdbb *tests/testthat/test-06-summarize-plants.R
 28142f20d57830a3824490a148509d23 *tests/testthat/test-08-NDVI.R
 fa2e25e6e7ac34969feff3561c18c3f8 *tests/testthat/test-09-get-future-moons.R
 c631e96aeb8d13244bbdc7c5196c8934 *tests/testthat/test-10-summarize_ants.R
-c1a8b85f024804e479239e7e4ab89b78 *tests/testthat/test-99-regression.R
+b7b327b23afe07d36db4600d1028899b *tests/testthat/test-99-regression.R
 903c16417bc0e580500aaccd6e0e756a *vignettes/portal_researcher_examples.Rmd
-ab531f28ced3040d8dae7e829f6c2d63 *vignettes/rodent-abundance-demo.Rmd
+1b44d3c691ae5dadbc24b4a8d3f48887 *vignettes/rodent-abundance-demo.Rmd
