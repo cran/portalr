@@ -13,7 +13,7 @@
 
 <meta name="author" content="Ellen K. Bledsoe" />
 
-<meta name="date" content="2019-10-04" />
+<meta name="date" content="2020-01-08" />
 
 <title>Examples of How Portal Researchers Are Using the Package</title>
 
@@ -96,7 +96,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Examples of How Portal Researchers Are Using the Package</h1>
 <h4 class="author">Ellen K. Bledsoe</h4>
-<h4 class="date">2019-10-04</h4>
+<h4 class="date">2020-01-08</h4>
 
 
 
@@ -108,7 +108,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>First, we need to install the <code>portalr</code> package if we haven’t done so already. We’ll also load <code>tidyverse</code>, which has many packages for data manipulation and plotting.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#devtools::install_github(&quot;weecology/portalr&quot;)</span>
 <span class="kw">library</span>(portalr)
-<span class="kw">library</span>(tidyverse)  </code></pre></div>
+<span class="kw">library</span>(dplyr)
+<span class="kw">library</span>(tidyr)
+<span class="kw">library</span>(ggplot2)</code></pre></div>
 <p><br /></p>
 </div>
 </div>
@@ -275,6 +277,7 @@ biomass_ratio &lt;-<span class="st"> </span>biomass_total <span class="op">%&gt;
 <th align="left">species</th>
 <th align="right">abundance</th>
 <th align="right">quads</th>
+<th align="left">treatment</th>
 </tr>
 </thead>
 <tbody>
@@ -285,6 +288,7 @@ biomass_ratio &lt;-<span class="st"> </span>biomass_total <span class="op">%&gt;
 <td align="left">ambr arte</td>
 <td align="right">0</td>
 <td align="right">8</td>
+<td align="left">control</td>
 </tr>
 <tr class="even">
 <td align="right">1981</td>
@@ -293,6 +297,7 @@ biomass_ratio &lt;-<span class="st"> </span>biomass_total <span class="op">%&gt;
 <td align="left">amsi inte</td>
 <td align="right">0</td>
 <td align="right">8</td>
+<td align="left">control</td>
 </tr>
 <tr class="odd">
 <td align="right">1981</td>
@@ -301,6 +306,7 @@ biomass_ratio &lt;-<span class="st"> </span>biomass_total <span class="op">%&gt;
 <td align="left">amsi tess</td>
 <td align="right">0</td>
 <td align="right">8</td>
+<td align="left">control</td>
 </tr>
 <tr class="even">
 <td align="right">1981</td>
@@ -309,6 +315,7 @@ biomass_ratio &lt;-<span class="st"> </span>biomass_total <span class="op">%&gt;
 <td align="left">andr occi</td>
 <td align="right">0</td>
 <td align="right">8</td>
+<td align="left">control</td>
 </tr>
 <tr class="odd">
 <td align="right">1981</td>
@@ -317,6 +324,7 @@ biomass_ratio &lt;-<span class="st"> </span>biomass_total <span class="op">%&gt;
 <td align="left">astr allo</td>
 <td align="right">0</td>
 <td align="right">8</td>
+<td align="left">control</td>
 </tr>
 <tr class="even">
 <td align="right">1981</td>
@@ -325,6 +333,7 @@ biomass_ratio &lt;-<span class="st"> </span>biomass_total <span class="op">%&gt;
 <td align="left">astr nutt</td>
 <td align="right">0</td>
 <td align="right">8</td>
+<td align="left">control</td>
 </tr>
 </tbody>
 </table>
@@ -341,6 +350,7 @@ biomass_ratio &lt;-<span class="st"> </span>biomass_total <span class="op">%&gt;
 <th align="left">species</th>
 <th align="right">abundance</th>
 <th align="right">quads</th>
+<th align="left">treatment</th>
 </tr>
 </thead>
 <tbody>
@@ -351,6 +361,7 @@ biomass_ratio &lt;-<span class="st"> </span>biomass_total <span class="op">%&gt;
 <td align="left">ambr arte</td>
 <td align="right">NA</td>
 <td align="right">0</td>
+<td align="left">NA</td>
 </tr>
 <tr class="even">
 <td align="right">1981</td>
@@ -359,6 +370,7 @@ biomass_ratio &lt;-<span class="st"> </span>biomass_total <span class="op">%&gt;
 <td align="left">amsi inte</td>
 <td align="right">NA</td>
 <td align="right">0</td>
+<td align="left">NA</td>
 </tr>
 <tr class="odd">
 <td align="right">1981</td>
@@ -367,6 +379,7 @@ biomass_ratio &lt;-<span class="st"> </span>biomass_total <span class="op">%&gt;
 <td align="left">amsi tess</td>
 <td align="right">NA</td>
 <td align="right">0</td>
+<td align="left">NA</td>
 </tr>
 <tr class="even">
 <td align="right">1981</td>
@@ -375,6 +388,7 @@ biomass_ratio &lt;-<span class="st"> </span>biomass_total <span class="op">%&gt;
 <td align="left">andr occi</td>
 <td align="right">NA</td>
 <td align="right">0</td>
+<td align="left">NA</td>
 </tr>
 <tr class="odd">
 <td align="right">1981</td>
@@ -383,6 +397,7 @@ biomass_ratio &lt;-<span class="st"> </span>biomass_total <span class="op">%&gt;
 <td align="left">astr allo</td>
 <td align="right">NA</td>
 <td align="right">0</td>
+<td align="left">NA</td>
 </tr>
 <tr class="even">
 <td align="right">1981</td>
@@ -391,6 +406,7 @@ biomass_ratio &lt;-<span class="st"> </span>biomass_total <span class="op">%&gt;
 <td align="left">astr nutt</td>
 <td align="right">NA</td>
 <td align="right">0</td>
+<td align="left">NA</td>
 </tr>
 </tbody>
 </table>

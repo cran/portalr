@@ -11,12 +11,9 @@
 weather <- function(level = "daily", fill = FALSE, path = get_default_data_path())
 {
   level <- tolower(level)
-  weather_new <- read.csv(full_path("PortalData/Weather/Portal_weather.csv", path),
-                          na.strings = c(""), stringsAsFactors = FALSE)
-  weather_old <- read.csv(full_path("PortalData/Weather/Portal_weather_19801989.csv", path),
-                          na.strings = c("-99"), stringsAsFactors = FALSE)
-  moon_dates <- read.csv(full_path("PortalData/Rodents/moon_dates.csv", path),
-                         na.strings = c(""), stringsAsFactors = FALSE)
+  weather_new <- load_datafile("Weather/Portal_weather.csv", na.strings = c(""), path = path)
+  weather_old <- load_datafile("Weather/Portal_weather_19801989.csv", na.strings = c("-99"), path = path)
+  moon_dates <- load_datafile("Rodents/moon_dates.csv", na.strings = c(""), path = path)
 
   ###########Summarise by Day ----------------------
   days <- weather_new %>%
@@ -106,31 +103,24 @@ weather <- function(level = "daily", fill = FALSE, path = get_default_data_path(
 fill_missing_weather <- function(weather, path = get_default_data_path())
 {
   portal4sw <- read.csv(full_path('PortalData/Weather/Portal4sw_regional_weather.csv', path),
-                        na.strings = c(""), header = TRUE,
-                        colClasses = c("character", rep("integer", 3), "character",
-                                       "integer", rep("character", 3), "Date"))
+                        na.strings = c(""), header = TRUE, stringsAsFactors = FALSE) %>%
+    dplyr::select(c("year", "month", "day", "date", "name", "prcp", "snow", "tmax", "tmin", "tobs"))
+
   sansimon <- read.csv(full_path('PortalData/Weather/Sansimon_regional_weather.csv', path),
-                       na.strings = c(""), header = TRUE,
-                       colClasses = c("character", rep("integer", 3), "character",
-                                      "integer", rep("character", 3), "Date"))
+                       na.strings = c(""), header = TRUE, stringsAsFactors = FALSE) %>%
+    dplyr::select(c("year", "month", "day", "date", "name", "prcp", "snow"))
+
   region <- dplyr::full_join(portal4sw, sansimon, by =
-                               c("date", "year", "month", "day", "element")) %>%
-    dplyr::filter(date >= "1980-01-01")
+                               c("date", "year", "month", "day")) %>%
+    dplyr::arrange(.data$year,.data$ month, .data$day) %>%
+    dplyr::filter(.data$date >= "1980-01-01")
 
   regionmeans <- region %>%
-    tidyr::gather(key = "source", value = "value", .data$value.x, .data$value.y) %>%
-    dplyr::group_by(.data$date, .data$element) %>%
-    dplyr::summarize(value = mean(.data$value, na.rm = TRUE)) %>%
+    dplyr::group_by(.data$date) %>%
+    dplyr::rowwise() %>%
+    dplyr::mutate(precip = mean(c(.data$prcp.x, .data$prcp.y), na.rm = TRUE, trim = 0)) %>%
     dplyr::ungroup() %>%
-    dplyr::mutate(value = .data$value / 10) %>%
-    tidyr::spread(.data$element, .data$value) %>%
-    dplyr::mutate(tmin = .data$TMIN,
-                  tmax = .data$TMAX,
-                  tobs = .data$TOBS,
-                  precip = .data$PRCP,
-                  year = as.integer(lubridate::year(.data$date)),
-                  month = as.integer(lubridate::month(.data$date)),
-                  day = lubridate::day(.data$date)) %>%
+    dplyr::mutate(precip = ifelse(is.nan(.data$precip), NA, .data$precip)) %>%
     dplyr::filter(!(is.na(.data$tmin) & is.na(.data$tmax) &
                       is.na(.data$tobs) & is.na(.data$precip))) %>%
     dplyr::select(c("year", "month", "day", "precip", "tmin", "tmax", "tobs"))

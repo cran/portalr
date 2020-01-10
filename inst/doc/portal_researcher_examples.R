@@ -12,7 +12,9 @@ knitr::opts_chunk$set(
 ## ---- warning = FALSE, message = FALSE-----------------------------------
 #devtools::install_github("weecology/portalr")
 library(portalr)
-library(tidyverse)  
+library(dplyr)
+library(tidyr)
+library(ggplot2)
 
 ## ---- warning = FALSE, message = FALSE-----------------------------------
 biomass_data <- portalr::summarize_rodent_data(path = "repo", 

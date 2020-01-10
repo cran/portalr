@@ -16,6 +16,19 @@ full_path <- function(reference_path, base_path = getwd()) {
   return(path)
 }
 
+#' Return the local user's GitHub Personal Access Token (PAT) (from gh package)
+#' https://github.com/r-lib/gh/blob/master/R/gh_request.R
+#'
+#' @return A string, with the token, or a zero length string scalar,
+#' if no token is available.
+#'
+#' @export
+
+gh_token <- function() {
+  token <- Sys.getenv('GITHUB_PAT', "")
+  if (token == "") Sys.getenv("GITHUB_TOKEN", "") else token
+}
+
 #' @title Download the PortalData repo
 #'
 #' @description This downloads the latest portal data regardless if they are
@@ -71,9 +84,19 @@ download_observations <- function(path = get_default_data_path(),
   # Attemt to download the zip file
   if (!quiet)
     message("Downloading version ", releases$version[match_idx], " of the data...")
+
   zip_download_path <- releases$zipball_url[match_idx]
   zip_download_dest <- full_path("PortalData.zip", tempdir())
-  download.file(zip_download_path, zip_download_dest, quiet = TRUE, mode = "wb")
+  if (grepl("github", zip_download_path))
+  {
+    ### This is the ideal way to download using the `gh` package, but the `.destfile`
+    ### option is only in the github version of the package for now. (2019-10-06)
+    #    gh::gh(paste("GET", zip_download_path), .destfile = zip_download_dest)
+    httr::GET(zip_download_path, c(httr::authenticate(gh_token(), "x-oauth-basic", "basic"),
+                                   httr::write_disk(zip_download_dest, overwrite = TRUE)))
+  } else {
+    download.file(zip_download_path, zip_download_dest, quiet = TRUE, mode = "wb")
+  }
 
   final_data_folder <- full_path("PortalData", path)
 
@@ -191,52 +214,24 @@ get_zenodo_latest_release <- function()
 #' @noRd
 get_github_releases <- function()
 {
-  pat <- Sys.getenv("GITHUB_PAT")
-  if (identical(pat, ""))
-  {
-    github_auth <- NULL
-  } else {
-    github_auth <- httr::authenticate(pat, "x-oauth-basic", "basic")
-  }
-
-  ## try to get links to all versions from GitHub
-  releases <- data.frame(tag_name = character(),
-                         zipball_url = character())
-  match_text <- "next"
-  page_idx <- 1
-
-  # keep getting info until no more `next` pages
-  while (match_text == "next" || match_text == "last")
-  {
-    github_path <- paste0("https://api.github.com/repos/weecology/PortalData/releases?page=", page_idx)
-    resp <- httr::GET(github_path, github_auth)
-
-    # check if problems with retrieving info
-    if (httr::headers(resp)$status == "403 Forbidden" &&
-        httr::headers(resp)$"x-ratelimit-remaining" == "0") # rate limit exceeded
+  tryCatch({
+    resp <- gh::gh(
+      "GET /repos/:owner/:repo/releases",
+      owner = "weecology",
+      repo = "PortalData",
+      .limit = Inf)
+  }, error = function(e) {
+    if ("content" %in% names(e) && "documentation_url" %in% names(e$content))
     {
-      stop("Exceeded GitHub rate limit, please try again in an hour or consult the documentation for details.\n",
-           "https://developer.github.com/v3/#rate-limiting")
-    } else if (httr::http_type(resp) != "application/json") # check for errors
-    {
-      stop("GitHub response was not in JSON format", call. = FALSE)
-    } else if (httr::headers(resp)$status == "401 Unauthorized"){
-      stop("Bad GitHub credentials")
+      e$message <- paste(e$message, " Documentation is available at", e$content$documentation_url)
     }
-
-    # extract release info
-    releases <- rbind(releases,
-                      jsonlite::fromJSON(httr::content(resp, "text"))[, c("tag_name", "zipball_url")])
-
-    # update page count
-    page_idx <- page_idx + 1
-
-    # check for next page of results
-    link_str <- httr::headers(resp)$link
-    match_pos <- regexec("^<.+>; rel=\"([a-z]+)\", <.+>; rel=\"([a-z]+)\"$", link_str)
-    match_text <- regmatches(link_str, match_pos)[[1]][2]
+    stop(e)
   }
-  names(releases) <- c("version", "zipball_url")
+  )
+
+  releases <- data.frame(version = vapply(resp, `[[`, "", "tag_name"),
+                         zipball_url = vapply(resp, `[[`, "", "zipball_url"),
+                         stringsAsFactors = FALSE)
   return(releases)
 }
 

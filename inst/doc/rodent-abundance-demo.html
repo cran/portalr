@@ -13,7 +13,7 @@
 
 <meta name="author" content="Hao Ye" />
 
-<meta name="date" content="2019-10-04" />
+<meta name="date" content="2020-01-08" />
 
 <title>Portal Rodent Abundance Demo</title>
 
@@ -96,7 +96,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Portal Rodent Abundance Demo</h1>
 <h4 class="author">Hao Ye</h4>
-<h4 class="date">2019-10-04</h4>
+<h4 class="date">2020-01-08</h4>
 
 
 
@@ -111,7 +111,9 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><p><code>cowplot</code> contains a nicer default theme for ggplot.</p></li>
 <li><p><code>portalr</code> is this package, which contains functions to read in the Portal data and do some basic processing.</p></li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(tidyverse)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
+<span class="kw">library</span>(tidyr)
+<span class="kw">library</span>(ggplot2)
 <span class="kw">library</span>(cowplot)
 <span class="kw">library</span>(portalr)</code></pre></div>
 </div>
@@ -122,10 +124,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>First, we try to load the data. If there isn’t a Portal folder, than <code>load_rodent_data</code> will fall back to downloading the data, as well.</p>
 <p>check whether we already have the data. If we don’t have the data, or if the version we have isn’t the most recent, we use the <code>download_observations</code> function to download the latest copy of the data.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">portal_data_path &lt;-<span class="st"> </span><span class="kw">tempdir</span>() <span class="co"># use a temporary folder to store downloaded data</span>
-data_tables &lt;-<span class="st"> </span><span class="kw">load_rodent_data</span>(<span class="dt">path =</span> portal_data_path, <span class="dt">download_if_missing =</span> <span class="ot">TRUE</span>)
-<span class="co">#&gt; Warning in load_datafile(file.path(&quot;Rodents&quot;, &quot;Portal_rodent.csv&quot;), na.strings = &quot;&quot;, : Proceeding to download data into specified path/var/folders/vd/jc3_fd0j7yjbg49g693m7yw40000gn/T//RtmpmnaTrV</span>
-<span class="co">#&gt; Downloading version 1.135.1 of the data...</span>
-<span class="co">#&gt; Loading in data version 1.135.1</span></code></pre></div>
+data_tables &lt;-<span class="st"> </span><span class="kw">load_rodent_data</span>(portal_data_path, <span class="dt">download_if_missing =</span> <span class="ot">TRUE</span>)
+<span class="co">#&gt; Warning in load_datafile(file.path(&quot;Rodents&quot;, &quot;Portal_rodent.csv&quot;), na.strings = &quot;&quot;, : Proceeding to download data into specified path/var/folders/vd/jc3_fd0j7yjbg49g693m7yw40000gn/T//RtmpXuvHb2</span>
+<span class="co">#&gt; Downloading version 2.4.0 of the data...</span>
+<span class="co">#&gt; Loading in data version 2.4.0</span></code></pre></div>
 <p>The <code>load_rodent_data</code> function reads in several tables related to the rodent abundances. We won’t necessarily use all of these tables, but loading this now gives us access later.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">summary</span>(data_tables))
 <span class="co">#&gt;                Length Class      Mode</span>
@@ -140,7 +142,7 @@ data_tables &lt;-<span class="st"> </span><span class="kw">load_rodent_data</spa
 <p>The first table that we loaded (<code>data_tables$rodent_data</code>) is a record of whatever was found in the traps, mostly rodents, but also a few other taxa. If we just wanted to get the rodent abundance data, we could use the <code>abundance</code> function, which has default arguments to filter out the non-rodents.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># get rodent abundance by plot</span>
 rodent_abundance_by_plot &lt;-<span class="st"> </span><span class="kw">abundance</span>(<span class="dt">path =</span> portal_data_path, <span class="dt">time =</span> <span class="st">&quot;date&quot;</span>, <span class="dt">level =</span> <span class="st">&quot;plot&quot;</span>) 
-<span class="co">#&gt; Loading in data version 1.135.1</span>
+<span class="co">#&gt; Loading in data version 2.4.0</span>
 
 rodent_abundance &lt;-<span class="st"> </span>rodent_abundance_by_plot <span class="op">%&gt;%</span>
 <span class="st">  </span><span class="kw">gather</span>(species, abundance, <span class="op">-</span>censusdate, <span class="op">-</span>treatment, <span class="op">-</span>plot) <span class="op">%&gt;%</span>

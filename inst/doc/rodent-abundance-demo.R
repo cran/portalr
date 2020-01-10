@@ -11,13 +11,15 @@ knitr::opts_chunk$set(
 )
 
 ## ---- warning = FALSE, message = FALSE-----------------------------------
-library(tidyverse)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
 library(cowplot)
 library(portalr)
 
 ## ------------------------------------------------------------------------
 portal_data_path <- tempdir() # use a temporary folder to store downloaded data
-data_tables <- load_rodent_data(path = portal_data_path, download_if_missing = TRUE)
+data_tables <- load_rodent_data(portal_data_path, download_if_missing = TRUE)
 
 ## ------------------------------------------------------------------------
 print(summary(data_tables))
