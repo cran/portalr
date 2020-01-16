@@ -1,6 +1,6 @@
 Package: portalr
 Title: Create Useful Summaries of the Portal Data
-Version: 0.3.0
+Version: 0.3.1
 Authors@R: c(person(c("Glenda", "M."), "Yenni", role = c("aut", "cre"), 
                     email = "glenda@weecology.org", 
                     comment = c(ORCID = "0000-0001-6969-1848")), 
@@ -34,10 +34,10 @@ Imports: dplyr, tidyr, lubridate, magrittr, httr, rlang, forecast,
         lunar, tibble, usethis (>= 1.5.0), crayon, clisymbols, gh
 Suggests: httptest, cowplot, knitr, rmarkdown, pkgdown, covr, ggplot2,
         testthat
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.2
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2020-01-09 04:37:35 UTC; GlendaYenni
+Packaged: 2020-01-15 22:46:04 UTC; GlendaYenni
 Author: Glenda M. Yenni [aut, cre] (<https://orcid.org/0000-0001-6969-1848>),
   Hao Ye [aut] (<https://orcid.org/0000-0002-8630-1458>),
   Erica M. Christensen [aut] (<https://orcid.org/0000-0002-5635-2502>),
@@ -49,4 +49,4 @@ Author: Glenda M. Yenni [aut, cre] (<https://orcid.org/0000-0001-6969-1848>),
   S.K. Morgan Ernest [aut] (<https://orcid.org/0000-0002-6026-8530>)
 Maintainer: Glenda M. Yenni <glenda@weecology.org>
 Repository: CRAN
-Date/Publication: 2020-01-10 11:50:02 UTC
+Date/Publication: 2020-01-16 15:00:02 UTC

@@ -1,4 +1,4 @@
-## ----setup, include = FALSE----------------------------------------------
+## ----setup, include = FALSE---------------------------------------------------
 # check if we're running this as part of R CMD CHECK and skip if so
 is_check <- ("CheckExEnv" %in% search()) || any(c("_R_CHECK_TIMINGS_",
              "_R_CHECK_LICENSE_") %in% names(Sys.getenv()))
@@ -10,21 +10,21 @@ knitr::opts_chunk$set(
   eval = !is_check
 )
 
-## ---- warning = FALSE, message = FALSE-----------------------------------
+## ---- warning = FALSE, message = FALSE----------------------------------------
 library(dplyr)
 library(tidyr)
 library(ggplot2)
 library(cowplot)
 library(portalr)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 portal_data_path <- tempdir() # use a temporary folder to store downloaded data
 data_tables <- load_rodent_data(portal_data_path, download_if_missing = TRUE)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 print(summary(data_tables))
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 # get rodent abundance by plot
 rodent_abundance_by_plot <- abundance(path = portal_data_path, time = "date", level = "plot") 
 
@@ -34,7 +34,7 @@ rodent_abundance <- rodent_abundance_by_plot %>%
   rename(abundance = n)
 print(summary(rodent_abundance))
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 join_scientific_name <- function(rodent_abundance, 
                                  species_table = data_tables$species_table)
 {
@@ -70,10 +70,10 @@ my_plot <- make_abundance_plot_over_time(rodent_abundance)
 
 print(my_plot)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 print(summary(data_tables$plots_table))
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 plot_treatments <- data_tables$plots_table %>%
   mutate(iso_date = as.Date(paste0(year, "-", month, "-", "01")), 
          plot = as.factor(plot)) %>%
@@ -98,7 +98,7 @@ my_plot <- ggplot(plot_treatments,
 
 print(my_plot)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 always_control_plots <- plot_treatments %>% 
   group_by(plot) %>% 
   summarize(always_control = all(treatment == "control")) %>% 
@@ -106,7 +106,7 @@ always_control_plots <- plot_treatments %>%
 
 print(always_control_plots)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 mostly_control_plots <- plot_treatments %>% 
   filter(iso_date < "2015-01-01") %>%
   group_by(plot) %>%
@@ -115,7 +115,7 @@ mostly_control_plots <- plot_treatments %>%
 
 print(mostly_control_plots)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 date_span <- plot_treatments %>%
   filter(plot %in% mostly_control_plots$plot) %>%
   group_by(iso_date) %>%
@@ -140,7 +140,7 @@ rodent_abundance_control %>%
   make_abundance_plot_over_time() %>%
   print()
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 mostly_exclosure_plots <- plot_treatments %>% 
   filter(iso_date > as.Date("1989-01-01"), 
          iso_date < "2015-01-01") %>%
@@ -150,7 +150,7 @@ mostly_exclosure_plots <- plot_treatments %>%
 
 print(mostly_exclosure_plots)
 
-## ------------------------------------------------------------------------
+## -----------------------------------------------------------------------------
 date_span <- plot_treatments %>%
   filter(plot %in% mostly_exclosure_plots$plot) %>%
   group_by(iso_date) %>%
