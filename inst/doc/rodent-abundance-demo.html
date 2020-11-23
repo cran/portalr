@@ -12,7 +12,7 @@
 
 <meta name="author" content="Hao Ye" />
 
-<meta name="date" content="2020-08-26" />
+<meta name="date" content="2020-11-23" />
 
 <title>Portal Rodent Abundance Demo</title>
 
@@ -315,7 +315,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 <h1 class="title toc-ignore">Portal Rodent Abundance Demo</h1>
 <h4 class="author">Hao Ye</h4>
-<h4 class="date">2020-08-26</h4>
+<h4 class="date">2020-11-23</h4>
 
 
 
@@ -344,13 +344,13 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <p>check whether we already have the data. If we don’t have the data, or if the version we have isn’t the most recent, we use the <code>download_observations</code> function to download the latest copy of the data.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a>portal_data_path &lt;-<span class="st"> </span><span class="kw">tempdir</span>() <span class="co"># use a temporary folder to store downloaded data</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a>data_tables &lt;-<span class="st"> </span><span class="kw">load_rodent_data</span>(portal_data_path, <span class="dt">download_if_missing =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a><span class="co">#&gt; Warning in load_datafile(file.path(&quot;Rodents&quot;, &quot;Portal_rodent.csv&quot;), na.strings = &quot;&quot;, : Proceeding to download data into specified path/var/folders/vd/jc3_fd0j7yjbg49g693m7yw40000gn/T//Rtmp9o5hul</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a><span class="co">#&gt; Warning in load_datafile(file.path(&quot;Rodents&quot;, &quot;Portal_rodent.csv&quot;), na.strings = &quot;&quot;, : Proceeding to download data into specified path/var/folders/vd/jc3_fd0j7yjbg49g693m7yw40000gn/T//RtmplWpGIL</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a><span class="co">#&gt; </span></span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true"></a>ℹ Running gh query</span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true"></a>ℹ Running gh query, got <span class="dv">100</span> records of about <span class="dv">200</span></span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true"></a>                                                </span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true"></a>Downloading version <span class="dv">2</span>.<span class="fl">40.0</span> of the data...</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true"></a><span class="co">#&gt; Loading in data version 2.40.0</span></span></code></pre></div>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true"></a>Downloading version <span class="dv">2</span>.<span class="fl">56.0</span> of the data...</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true"></a><span class="co">#&gt; Loading in data version 2.56.0</span></span></code></pre></div>
 <p>The <code>load_rodent_data</code> function reads in several tables related to the rodent abundances. We won’t necessarily use all of these tables, but loading this now gives us access later.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="kw">print</span>(<span class="kw">summary</span>(data_tables))</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a><span class="co">#&gt;                Length Class      Mode</span></span>
@@ -365,7 +365,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <p>The first table that we loaded (<code>data_tables$rodent_data</code>) is a record of whatever was found in the traps, mostly rodents, but also a few other taxa. If we just wanted to get the rodent abundance data, we could use the <code>abundance</code> function, which has default arguments to filter out the non-rodents.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="co"># get rodent abundance by plot</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a>rodent_abundance_by_plot &lt;-<span class="st"> </span><span class="kw">abundance</span>(<span class="dt">path =</span> portal_data_path, <span class="dt">time =</span> <span class="st">&quot;date&quot;</span>, <span class="dt">level =</span> <span class="st">&quot;plot&quot;</span>) </span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a><span class="co">#&gt; Loading in data version 2.40.0</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a><span class="co">#&gt; Loading in data version 2.56.0</span></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a></span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a>rodent_abundance &lt;-<span class="st"> </span>rodent_abundance_by_plot <span class="op">%&gt;%</span></span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true"></a><span class="st">  </span><span class="kw">gather</span>(species, abundance, <span class="op">-</span>censusdate, <span class="op">-</span>treatment, <span class="op">-</span>plot) <span class="op">%&gt;%</span></span>
