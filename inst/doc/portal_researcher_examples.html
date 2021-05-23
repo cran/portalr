@@ -12,7 +12,7 @@
 
 <meta name="author" content="Ellen K. Bledsoe" />
 
-<meta name="date" content="2021-01-27" />
+<meta name="date" content="2021-05-22" />
 
 <title>Examples of How Portal Researchers Are Using the Package</title>
 
@@ -40,7 +40,14 @@ document.addEventListener('DOMContentLoaded', function(e) {
     </style>
 
 
-<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
 <style type="text/css" data-origin="pandoc">
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
@@ -325,7 +332,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 <h1 class="title toc-ignore">Examples of How Portal Researchers Are Using the Package</h1>
 <h4 class="author">Ellen K. Bledsoe</h4>
-<h4 class="date">2021-01-27</h4>
+<h4 class="date">2021-05-22</h4>
 
 
 
@@ -457,7 +464,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <h2>Working with the Data</h2>
 <p>Let’s select only the rows we want:</p>
 <ul>
-<li><p>Based on information about the plot treatment switches that can be found in this <a href="https://github.com/weecology/PortalData/tree/master/SiteandMethods">Readme file</a> in the PortalData repo, we want to select censuses in the years 1988-2014; to make the data a bit easier to work with, we can also split the date column into three separate columns and then filter on the year column.</p></li>
+<li><p>Based on information about the plot treatment switches that can be found in this <a href="https://github.com/weecology/PortalData/tree/main/SiteandMethods">Readme file</a> in the PortalData repo, we want to select censuses in the years 1988-2014; to make the data a bit easier to work with, we can also split the date column into three separate columns and then filter on the year column.</p></li>
 <li><p>Since we are comparing control plots and exclosure plots, we can also filter for only those treatment types.</p></li>
 </ul>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a>biomass_data &lt;-<span class="st"> </span>biomass_data <span class="op">%&gt;%</span><span class="st"> </span></span>

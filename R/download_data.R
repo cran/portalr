@@ -28,11 +28,6 @@ full_path <- function(reference_path, base_path = getwd()) {
 #'
 #' @return None
 #'
-#' @examples
-#' \donttest{
-#'   download_observations()
-#'   download_observations("~/old-data", version = "1.50.0")
-#' }
 #'
 #' @export
 download_observations <- function(path = get_default_data_path(),
@@ -101,7 +96,7 @@ download_observations <- function(path = get_default_data_path(),
     unlink(final_data_folder, recursive = TRUE)
   }
 
-  #Github serves this up with the -master extension. Unzip and rename to remove that.
+  #Github serves this up with the -main extension. Unzip and rename to remove that.
   primary_data_folder <- unzip(zip_download_dest, list = TRUE)$Name[1]
   unzip(zip_download_dest, exdir = path)
   Sys.sleep(10)

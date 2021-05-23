@@ -1,5 +1,5 @@
 #' @name summarize_rodent_data
-#' @aliases abundance biomass energy
+#' @aliases abundance biomass energy rates
 #'
 #' @title Generate summaries of Portal rodent data
 #'
@@ -23,7 +23,7 @@
 #'   "period" (sequential Portal surveys), "newmoon" (lunar cycle numbering),
 #'   "date" (calendar date), or "all" (for all time indices)
 #' @param output specify whether to return "abundance", or "biomass", or
-#'   "energy"
+#'   "energy", or "rates"
 #' @param fillweight specify whether to fill in unknown weights with other
 #'   records from that individual or species, where possible
 #' @param na_drop logical, drop NA values (representing insufficient sampling)
@@ -109,10 +109,6 @@ summarize_rodent_data <- function(path = get_default_data_path(),
 #'
 #' @param ... arguments passed to \code{\link{summarize_rodent_data}}
 #'
-#' @examples
-#' \donttest{
-#' abundance("repo")
-#' }
 #' @export
 #'
 abundance <- function(...) {
@@ -125,10 +121,6 @@ abundance <- function(...) {
 #'
 #' @inheritParams abundance
 #'
-#' @examples
-#' \donttest{
-#' biomass("repo")
-#' }
 #' @export
 #'
 biomass <- function(...) {
@@ -143,10 +135,6 @@ biomass <- function(...) {
 #'
 #' @inheritParams abundance
 #'
-#' @examples
-#' \donttest{
-#' energy("repo")
-#' }
 #' @export
 #'
 energy <- function(...) {
@@ -154,6 +142,19 @@ energy <- function(...) {
 }
 
 #' @rdname summarize_rodent_data
+#'
+#' @description * \code{rates()} generates a table of rodent growth rates
+#'   (computed as r=log(N[t+1]/N[t])
+#'
+#'@inheritParams abundance
+#'
+#' @export
+#'
+rates <- function(...) {
+
+  summarize_rodent_data(..., output = "rates")
+}
+
+#' @rdname summarize_rodent_data
 #' @export
 summarise_rodent_data <- summarize_rodent_data
-
