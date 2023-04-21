@@ -47,8 +47,8 @@ filter_plots <- function(data, plots = NULL)
   }
 
   # if no selection then return unaltered data
-  if (is.null(plots))
-    return(data)
+  return_if_null(x = plots, value = data)
+
 
   # otherwise return filtered data
   dplyr::filter(data, .data$plot %in% plots)
@@ -136,5 +136,5 @@ make_crosstab <- function(summary_data,
   summary_data %>%
     tidyr::spread(.data$species, !!variable_name, ...) %>%
     dplyr::ungroup() %>%
-    dplyr::select(vars_to_keep)
+    dplyr::select(tidyselect::all_of(vars_to_keep))
 }

@@ -66,7 +66,7 @@ ndvi <- function(level = "monthly", sensor = "landsat", fill = FALSE,
       dplyr::filter(.data$sensor %in% filtering) %>%
       dplyr::group_by(.data$newmoonnumber) %>%
       dplyr::summarize(ndvi = mean(.data$ndvi, na.rm = T)) %>%
-      tidyr::drop_na(.data$newmoonnumber) %>%
+      tidyr::drop_na("newmoonnumber") %>%
       dplyr::arrange(.data$newmoonnumber)
 
     if (fill == TRUE) {
@@ -175,7 +175,7 @@ fcast_ndvi <- function(hist_ndvi, level, lead, moons = NULL){
     which_nm_fcast <- which(moons$newmoonnumber %in% time_to_fcast)
     if (length(which_nm_fcast) < length(time_to_fcast)) {
       nfuture_nm <- length(time_to_fcast) - length(which_nm_fcast)
-      future_nm <- get_future_moons(moons, nfuture_nm)
+      future_nm <- get_future_newmoons(moons, nfuture_nm)
       moons$newmoondate <- as.character(moons$newmoondate)
       future_nm$newmoondate <- as.character(future_nm$newmoondate)
       moons <- rbind(moons, future_nm)
