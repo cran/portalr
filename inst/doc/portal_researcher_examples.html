@@ -12,7 +12,7 @@
 
 <meta name="author" content="Ellen K. Bledsoe" />
 
-<meta name="date" content="2023-04-21" />
+<meta name="date" content="2023-08-23" />
 
 <title>Examples of How Portal Researchers Are Using the Package</title>
 
@@ -341,7 +341,7 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 <h1 class="title toc-ignore">Examples of How Portal Researchers Are
 Using the Package</h1>
 <h4 class="author">Ellen K. Bledsoe</h4>
-<h4 class="date">2023-04-21</h4>
+<h4 class="date">2023-08-23</h4>
 
 
 
@@ -359,11 +359,11 @@ are included below.</p>
 <p>First, we need to install the <code>portalr</code> package if we
 haven’t done so already. We’ll also load <code>tidyverse</code>, which
 has many packages for data manipulation and plotting.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#devtools::install_github(&quot;weecology/portalr&quot;)</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(portalr)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co">#devtools::install_github(&quot;weecology/portalr&quot;)</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(portalr)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code></pre></div>
 <p><br /></p>
 </div>
 </div>
@@ -377,10 +377,10 @@ plots and how it has changed through time.</p>
 <p>Because we are going to compare biomass between plot types, we need
 to know the biomass on each plot. To achieve this, we can set
 <code>level = &quot;plot&quot;</code></p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>biomass_data <span class="ot">&lt;-</span> portalr<span class="sc">::</span><span class="fu">summarize_rodent_data</span>(<span class="at">path =</span> <span class="st">&quot;repo&quot;</span>, </span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">level =</span> <span class="st">&quot;plot&quot;</span>, </span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">output =</span> <span class="st">&quot;biomass&quot;</span>,</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>                                         <span class="at">time =</span> <span class="st">&quot;date&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>biomass_data <span class="ot">&lt;-</span> portalr<span class="sc">::</span><span class="fu">summarize_rodent_data</span>(<span class="at">path =</span> <span class="st">&quot;repo&quot;</span>, </span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>                                         <span class="at">level =</span> <span class="st">&quot;plot&quot;</span>, </span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>                                         <span class="at">output =</span> <span class="st">&quot;biomass&quot;</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>                                         <span class="at">time =</span> <span class="st">&quot;date&quot;</span>)</span></code></pre></div>
 <p>Note that the <code>path</code> argument in the
 <code>summarize_rodent_data</code> function has been set to “repo.”
 While you can choose the download all of the Portal data onto your local
@@ -407,8 +407,8 @@ treatment, plot number, and each species:</p>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left">10555</td>
-<td align="left">2022-02-26</td>
+<td align="left">10627</td>
+<td align="left">2022-07-30</td>
 <td align="left">removal</td>
 <td align="right">1</td>
 <td align="right">0</td>
@@ -420,25 +420,25 @@ treatment, plot number, and each species:</p>
 <td align="right">0</td>
 </tr>
 <tr class="even">
-<td align="left">10556</td>
-<td align="left">2022-02-26</td>
+<td align="left">10628</td>
+<td align="left">2022-07-30</td>
 <td align="left">removal</td>
 <td align="right">9</td>
 <td align="right">0</td>
-<td align="right">176</td>
-<td align="right">283</td>
+<td align="right">0</td>
+<td align="right">0</td>
 <td align="right">0</td>
 <td align="right">0</td>
 <td align="right">0</td>
 <td align="right">0</td>
 </tr>
 <tr class="odd">
-<td align="left">10557</td>
-<td align="left">2022-02-26</td>
+<td align="left">10629</td>
+<td align="left">2022-07-30</td>
 <td align="left">removal</td>
 <td align="right">10</td>
 <td align="right">0</td>
-<td align="right">53</td>
+<td align="right">0</td>
 <td align="right">0</td>
 <td align="right">0</td>
 <td align="right">0</td>
@@ -446,8 +446,8 @@ treatment, plot number, and each species:</p>
 <td align="right">0</td>
 </tr>
 <tr class="even">
-<td align="left">10558</td>
-<td align="left">2022-02-26</td>
+<td align="left">10630</td>
+<td align="left">2022-07-30</td>
 <td align="left">removal</td>
 <td align="right">12</td>
 <td align="right">0</td>
@@ -459,12 +459,12 @@ treatment, plot number, and each species:</p>
 <td align="right">0</td>
 </tr>
 <tr class="odd">
-<td align="left">10559</td>
-<td align="left">2022-02-26</td>
+<td align="left">10631</td>
+<td align="left">2022-07-30</td>
 <td align="left">removal</td>
 <td align="right">16</td>
 <td align="right">0</td>
-<td align="right">0</td>
+<td align="right">53</td>
 <td align="right">0</td>
 <td align="right">0</td>
 <td align="right">0</td>
@@ -472,12 +472,12 @@ treatment, plot number, and each species:</p>
 <td align="right">0</td>
 </tr>
 <tr class="even">
-<td align="left">10560</td>
-<td align="left">2022-02-26</td>
+<td align="left">10632</td>
+<td align="left">2022-07-30</td>
 <td align="left">removal</td>
 <td align="right">23</td>
 <td align="right">0</td>
-<td align="right">138</td>
+<td align="right">0</td>
 <td align="right">0</td>
 <td align="right">0</td>
 <td align="right">0</td>
@@ -500,26 +500,26 @@ column.</p></li>
 <li><p>Since we are comparing control plots and exclosure plots, we can
 also filter for only those treatment types.</p></li>
 </ul>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>biomass_data <span class="ot">&lt;-</span> biomass_data <span class="sc">%&gt;%</span> </span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># split the date column into year, month, and day</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(<span class="at">col =</span> censusdate, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">&quot;year&quot;</span>, <span class="st">&quot;month&quot;</span>, <span class="st">&quot;day&quot;</span>), <span class="at">sep =</span> <span class="st">&quot;-&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">&gt;=</span> <span class="dv">1988</span> <span class="sc">&amp;</span> year <span class="sc">&lt;</span> <span class="dv">2015</span>,                         <span class="co"># filter by year</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>         treatment <span class="sc">==</span> <span class="st">&quot;control&quot;</span> <span class="sc">|</span> treatment <span class="sc">==</span> <span class="st">&quot;exclosure&quot;</span>)  <span class="co"># filter by treatment type</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>biomass_data <span class="ot">&lt;-</span> biomass_data <span class="sc">%&gt;%</span> </span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>  <span class="co"># split the date column into year, month, and day</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>  <span class="fu">separate</span>(<span class="at">col =</span> censusdate, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">&quot;year&quot;</span>, <span class="st">&quot;month&quot;</span>, <span class="st">&quot;day&quot;</span>), <span class="at">sep =</span> <span class="st">&quot;-&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">&gt;=</span> <span class="dv">1988</span> <span class="sc">&amp;</span> year <span class="sc">&lt;</span> <span class="dv">2015</span>,                         <span class="co"># filter by year</span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>         treatment <span class="sc">==</span> <span class="st">&quot;control&quot;</span> <span class="sc">|</span> treatment <span class="sc">==</span> <span class="st">&quot;exclosure&quot;</span>)  <span class="co"># filter by treatment type</span></span></code></pre></div>
 <p>We can get the total biomass for each plot per census by summing the
 mass of all the species per row. From there, we will sum by year for
 each treatment type. Then, we can create the exclosure:control
 ratio.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># compute total biomass per year and treatment</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>biomass_total <span class="ot">&lt;-</span> biomass_data <span class="sc">%&gt;%</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gather</span>(species, biomass, BA<span class="sc">:</span>SO) <span class="sc">%&gt;%</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(year, treatment) <span class="sc">%&gt;%</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">totals =</span> <span class="fu">sum</span>(biomass, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># make a column with the exclosure:control ratio</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>biomass_ratio <span class="ot">&lt;-</span> biomass_total <span class="sc">%&gt;%</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">spread</span>(treatment, totals) <span class="sc">%&gt;%</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">EX_to_CO_ratio =</span> exclosure <span class="sc">/</span> control) <span class="sc">%&gt;%</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="co"># compute total biomass per year and treatment</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>biomass_total <span class="ot">&lt;-</span> biomass_data <span class="sc">%&gt;%</span></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>  <span class="fu">gather</span>(species, biomass, BA<span class="sc">:</span>SO) <span class="sc">%&gt;%</span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>  <span class="fu">group_by</span>(year, treatment) <span class="sc">%&gt;%</span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">totals =</span> <span class="fu">sum</span>(biomass, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a><span class="co"># make a column with the exclosure:control ratio</span></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>biomass_ratio <span class="ot">&lt;-</span> biomass_total <span class="sc">%&gt;%</span></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a>  <span class="fu">spread</span>(treatment, totals) <span class="sc">%&gt;%</span></span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">EX_to_CO_ratio =</span> exclosure <span class="sc">/</span> control) <span class="sc">%&gt;%</span></span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span></code></pre></div>
 </div>
 <div id="plotting-the-ratios" class="section level2">
 <h2>Plotting the Ratios</h2>
@@ -552,10 +552,10 @@ annual plants. Let’s say we want to take a look at the abundance of the
 <em>winter</em> annuals in the system, and we want to see if they differ
 by treatment type. We can use the <code>summarize_plant_data</code>
 function to get the appropriate data.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>plant_data <span class="ot">&lt;-</span> portalr<span class="sc">::</span><span class="fu">summarize_plant_data</span>(<span class="at">path =</span> <span class="st">&#39;repo&#39;</span>, <span class="at">level =</span> <span class="st">&#39;plot&#39;</span>,</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>                                            <span class="at">type =</span> <span class="st">&#39;winter-annual&#39;</span>, <span class="at">correct_sp =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>                                            <span class="at">unknowns =</span> <span class="cn">FALSE</span>, <span class="at">shape =</span> <span class="st">&#39;flat&#39;</span>, </span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>                                            <span class="at">output =</span> <span class="st">&#39;abundance&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>plant_data <span class="ot">&lt;-</span> portalr<span class="sc">::</span><span class="fu">summarize_plant_data</span>(<span class="at">path =</span> <span class="st">&#39;repo&#39;</span>, <span class="at">level =</span> <span class="st">&#39;plot&#39;</span>,</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>                                            <span class="at">type =</span> <span class="st">&#39;winter-annual&#39;</span>, <span class="at">correct_sp =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>                                            <span class="at">unknowns =</span> <span class="cn">FALSE</span>, <span class="at">shape =</span> <span class="st">&#39;flat&#39;</span>, </span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>                                            <span class="at">output =</span> <span class="st">&#39;abundance&#39;</span>)</span></code></pre></div>
 <p>What do some of these arguments mean? As above,
 <code>path = &#39;repo&#39;</code> pulls the data directly from the online
 repository. <code>level = &#39;plot&#39;</code> indicates that we want the data
@@ -648,7 +648,7 @@ plants that could be found in the winter: how many of them show up in
 the summer, for example?</p>
 <p>To get the data we want–just winter annuals found only in the winter
 season–we just need one more quick line of code.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>plant_data_winter <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(plant_data, season <span class="sc">==</span> <span class="st">&#39;winter&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>plant_data_winter <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(plant_data, season <span class="sc">==</span> <span class="st">&#39;winter&#39;</span>)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
