@@ -10,7 +10,7 @@ knitr::opts_chunk$set(
   eval = !is_check
 )
 
-## ---- warning = FALSE, message = FALSE----------------------------------------
+## ----warning = FALSE, message = FALSE-----------------------------------------
 library(dplyr)
 library(tidyr)
 library(ggplot2)
@@ -47,7 +47,7 @@ join_scientific_name <- function(rodent_abundance,
 
 rodent_abundance <- join_scientific_name(rodent_abundance)
 
-## ---- fig.cap = "Monthly abundance of rodents (all plots)", fig.width = 7.5, fig.height = 10----
+## ----fig.cap = "Monthly abundance of rodents (all plots)", fig.width = 7.5, fig.height = 10----
 make_abundance_plot_over_time <- function(rodent_abundance)
 {
   return(ggplot(rodent_abundance, 
@@ -79,7 +79,7 @@ plot_treatments <- data_tables$plots_table %>%
          plot = as.factor(plot)) %>%
   select(iso_date, plot, treatment)
 
-## ---- fig.cap = "Treatments of Plots by Date", fig.width = 7, fig.height = 10----
+## ----fig.cap = "Treatments of Plots by Date", fig.width = 7, fig.height = 10----
 my_plot <- ggplot(plot_treatments, 
                   aes(x = iso_date, y = treatment, color = treatment)) +
   geom_point(shape = 20) + 
@@ -124,7 +124,7 @@ date_span <- plot_treatments %>%
 
 print(date_span)
 
-## ---- fig.cap = "Monthly abundance of rodents (control plots)", fig.width = 7.5, fig.height = 10----
+## ----fig.cap = "Monthly abundance of rodents (control plots)", fig.width = 7.5, fig.height = 10----
 rodent_abundance_by_plot %>%
   filter(censusdate >= min(date_span$iso_date), 
          censusdate <= max(date_span$iso_date), 
@@ -159,7 +159,7 @@ date_span <- plot_treatments %>%
 
 print(date_span)
 
-## ---- fig.cap = "Monthly abundance of rodents (exclosure plots)", fig.width = 7.5, fig.height = 10----
+## ----fig.cap = "Monthly abundance of rodents (exclosure plots)", fig.width = 7.5, fig.height = 10----
 rodent_abundance_by_plot %>%
   filter(censusdate >= min(date_span$iso_date), 
          censusdate <= max(date_span$iso_date), 
@@ -175,7 +175,7 @@ rodent_abundance_exclosure %>%
   make_abundance_plot_over_time() %>%
   print()
 
-## ---- fig.cap = "Monthly abundance of rodents (control vs. exclosure plots)", fig.width = 7.5, fig.height = 10----
+## ----fig.cap = "Monthly abundance of rodents (control vs. exclosure plots)", fig.width = 7.5, fig.height = 10----
 rodent_abundance_merged <- bind_rows(
   mutate(rodent_abundance_control, treatment = "control"), 
   mutate(rodent_abundance_exclosure, treatment = "exclosure"))

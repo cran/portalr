@@ -1,6 +1,6 @@
 Package: portalr
 Title: Create Useful Summaries of the Portal Data
-Version: 0.4.1
+Version: 0.4.2
 Authors@R: 
     c(person(given = c("Glenda", "M."),
              family = "Yenni",
@@ -43,7 +43,7 @@ Authors@R:
              role = "cph"))
 Description: Download and generate summaries for the rodent,
     plant, ant, and weather data from the Portal Project. Portal is a
-    long-term (and ongoing) experimental monitoring site in the Chihuahua
+    long-term (and ongoing) experimental monitoring site in the Chihuahuan
     desert. The raw data files can be found at
     <https://github.com/weecology/portaldata>.
 License: MIT + file LICENSE
@@ -51,15 +51,16 @@ URL: https://weecology.github.io/portalr/,
         https://github.com/weecology/portalr
 BugReports: https://github.com/weecology/portalr/issues
 Depends: R (>= 3.2.3)
-Imports: clipr, clisymbols, crayon, dplyr, forecast, httr, lubridate,
-        lunar, magrittr, rlang, tidyr, tidyselect (>= 1.0.0), zoo
-Suggests: covr, cowplot, ggplot2, httptest, knitr, pkgdown, rmarkdown,
-        testthat
+Imports: cli, clipr, dplyr, forecast, httr, lubridate, lunar, magrittr,
+        rlang, tidyr, tidyselect (>= 1.2.1), zoo
+Suggests: cowplot, ggplot2, httptest, knitr, rmarkdown, testthat (>=
+        3.0.0)
 VignetteBuilder: knitr
 Encoding: UTF-8
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.2
+Config/testthat/edition: 3
 NeedsCompilation: no
-Packaged: 2023-08-23 16:29:50 UTC; GlendaYenni
+Packaged: 2024-08-28 00:36:39 UTC; GlendaYenni
 Author: Glenda M. Yenni [aut, cre] (<https://orcid.org/0000-0001-6969-1848>),
   Hao Ye [aut] (<https://orcid.org/0000-0002-8630-1458>),
   Erica M. Christensen [aut] (<https://orcid.org/0000-0002-5635-2502>),
@@ -72,4 +73,4 @@ Author: Glenda M. Yenni [aut, cre] (<https://orcid.org/0000-0001-6969-1848>),
   Weecology [cph]
 Maintainer: Glenda M. Yenni <glenda@weecology.org>
 Repository: CRAN
-Date/Publication: 2023-08-23 16:50:02 UTC
+Date/Publication: 2024-08-28 08:00:02 UTC
