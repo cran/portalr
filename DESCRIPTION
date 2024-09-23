@@ -1,6 +1,6 @@
 Package: portalr
 Title: Create Useful Summaries of the Portal Data
-Version: 0.4.2
+Version: 0.4.3
 Authors@R: 
     c(person(given = c("Glenda", "M."),
              family = "Yenni",
@@ -60,7 +60,7 @@ Encoding: UTF-8
 RoxygenNote: 7.3.2
 Config/testthat/edition: 3
 NeedsCompilation: no
-Packaged: 2024-08-28 00:36:39 UTC; GlendaYenni
+Packaged: 2024-09-23 22:02:16 UTC; GlendaYenni
 Author: Glenda M. Yenni [aut, cre] (<https://orcid.org/0000-0001-6969-1848>),
   Hao Ye [aut] (<https://orcid.org/0000-0002-8630-1458>),
   Erica M. Christensen [aut] (<https://orcid.org/0000-0002-5635-2502>),
@@ -73,4 +73,4 @@ Author: Glenda M. Yenni [aut, cre] (<https://orcid.org/0000-0001-6969-1848>),
   Weecology [cph]
 Maintainer: Glenda M. Yenni <glenda@weecology.org>
 Repository: CRAN
-Date/Publication: 2024-08-28 08:00:02 UTC
+Date/Publication: 2024-09-23 23:20:03 UTC
