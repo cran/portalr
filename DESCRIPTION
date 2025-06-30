@@ -1,6 +1,6 @@
 Package: portalr
 Title: Create Useful Summaries of the Portal Data
-Version: 0.4.3
+Version: 0.4.4
 Authors@R: 
     c(person(given = c("Glenda", "M."),
              family = "Yenni",
@@ -52,7 +52,7 @@ URL: https://weecology.github.io/portalr/,
 BugReports: https://github.com/weecology/portalr/issues
 Depends: R (>= 3.2.3)
 Imports: cli, clipr, dplyr, forecast, httr, lubridate, lunar, magrittr,
-        rlang, tidyr, tidyselect (>= 1.2.1), zoo
+        rlang, tibble, tidyr, tidyselect (>= 1.2.1), zoo
 Suggests: cowplot, ggplot2, httptest, knitr, rmarkdown, testthat (>=
         3.0.0)
 VignetteBuilder: knitr
@@ -60,17 +60,21 @@ Encoding: UTF-8
 RoxygenNote: 7.3.2
 Config/testthat/edition: 3
 NeedsCompilation: no
-Packaged: 2024-09-23 22:02:16 UTC; GlendaYenni
-Author: Glenda M. Yenni [aut, cre] (<https://orcid.org/0000-0001-6969-1848>),
-  Hao Ye [aut] (<https://orcid.org/0000-0002-8630-1458>),
-  Erica M. Christensen [aut] (<https://orcid.org/0000-0002-5635-2502>),
-  Juniper L. Simonis [aut] (<https://orcid.org/0000-0001-9798-0460>),
-  Ellen K. Bledsoe [aut] (<https://orcid.org/0000-0002-3629-7235>),
-  Renata M. Diaz [aut] (<https://orcid.org/0000-0003-0803-4734>),
-  Shawn D. Taylor [aut] (<https://orcid.org/0000-0002-6178-6903>),
-  Ethan P, White [aut] (<https://orcid.org/0000-0001-6728-7745>),
-  S.K. Morgan Ernest [aut] (<https://orcid.org/0000-0002-6026-8530>),
+Packaged: 2025-06-26 04:29:20 UTC; GlendaYenni
+Author: Glenda M. Yenni [aut, cre] (ORCID:
+    <https://orcid.org/0000-0001-6969-1848>),
+  Hao Ye [aut] (ORCID: <https://orcid.org/0000-0002-8630-1458>),
+  Erica M. Christensen [aut] (ORCID:
+    <https://orcid.org/0000-0002-5635-2502>),
+  Juniper L. Simonis [aut] (ORCID:
+    <https://orcid.org/0000-0001-9798-0460>),
+  Ellen K. Bledsoe [aut] (ORCID: <https://orcid.org/0000-0002-3629-7235>),
+  Renata M. Diaz [aut] (ORCID: <https://orcid.org/0000-0003-0803-4734>),
+  Shawn D. Taylor [aut] (ORCID: <https://orcid.org/0000-0002-6178-6903>),
+  Ethan P, White [aut] (ORCID: <https://orcid.org/0000-0001-6728-7745>),
+  S.K. Morgan Ernest [aut] (ORCID:
+    <https://orcid.org/0000-0002-6026-8530>),
   Weecology [cph]
 Maintainer: Glenda M. Yenni <glenda@weecology.org>
 Repository: CRAN
-Date/Publication: 2024-09-23 23:20:03 UTC
+Date/Publication: 2025-06-30 08:50:06 UTC

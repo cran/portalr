@@ -87,10 +87,10 @@ my_plot <- ggplot(plot_treatments,
   geom_vline(aes(xintercept = as.Date("1988-01-01")), linetype = 2) + 
   geom_vline(aes(xintercept = as.Date("2005-01-01")), linetype = 2) + 
   geom_vline(aes(xintercept = as.Date("2015-04-01")), linetype = 2) + 
-  facet_wrap(~plot, ncol = 4) + 
+  facet_wrap(~plot, ncol = 5) + 
   xlab("Date") + 
   ylab("Treatment") + 
-  scale_color_manual(values = rainbow(4)) + 
+  scale_color_manual(values = rainbow(5)) + 
   scale_x_date(breaks = seq(as.Date("1977-01-01"), to = as.Date("2018-01-01"), "+5 years"), date_labels = "%Y") + 
   theme_cowplot() + 
   guides(color = "none") + 
@@ -99,7 +99,7 @@ my_plot <- ggplot(plot_treatments,
 print(my_plot)
 
 ## -----------------------------------------------------------------------------
-always_control_plots <- plot_treatments %>% 
+always_control_plots <- summarise_rodent_data(level = "plot",plots = "Longterm") %>%
   group_by(plot) %>% 
   summarize(always_control = all(treatment == "control")) %>% 
   filter(always_control)
@@ -108,7 +108,8 @@ print(always_control_plots)
 
 ## -----------------------------------------------------------------------------
 mostly_control_plots <- plot_treatments %>% 
-  filter(iso_date < "2015-01-01") %>%
+  filter(iso_date < "2015-01-01",
+         iso_date > "1998-01-01") %>%
   group_by(plot) %>%
   summarize(mostly_control = all(treatment == "control")) %>% 
   filter(mostly_control)
